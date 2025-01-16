@@ -1,3 +1,6 @@
+const lblEscritorio = document.querySelector("#escritorio");
+const btnAtender = document.querySelector("button");
+
 const searchParams = new URLSearchParams(window.location.search);
 
 if (!searchParams.has("escritorio")) {
@@ -6,6 +9,8 @@ if (!searchParams.has("escritorio")) {
 }
 
 const escritorio = searchParams.get("escritorio");
+lblEscritorio.innerText = escritorio;
+
 const socket = io();
 
 socket.on("connect", () => {
@@ -14,7 +19,6 @@ socket.on("connect", () => {
 
 socket.on("disconnect", () => {
   btnCrear.disabled = true;
-  lblUltimoTicket.display = "none";
 });
 
 socket.on("ultimo-ticket", (ultimoT) => {
@@ -22,7 +26,7 @@ socket.on("ultimo-ticket", (ultimoT) => {
 });
 
 btnCrear.addEventListener("click", () => {
-  socket.emit("crear-ticket", null, (ticket) => {
+  /* socket.emit("crear-ticket", null, (ticket) => {
     lblNuevoTicket.innerText = ticket;
-  });
+  }); */
 });
